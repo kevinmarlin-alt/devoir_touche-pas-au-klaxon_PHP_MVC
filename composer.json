@@ -1,0 +1,23 @@
+{
+    "name": "company/travels",
+    "description": "TOUCHE PAS AU KLAXON",
+    "require": {
+        "php": "^8.5",
+        "izniburak/router": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.1",
+        "phpstan/phpstan": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kevin Marlin",
+            "email": "kevin.marlin@gmail.com"
+        }
+    ]
+}
