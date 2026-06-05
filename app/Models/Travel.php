@@ -3,36 +3,44 @@
 namespace App\Models;
 
 class Travel {
-    private int $id;
-
+    
     public function __construct(
-        private int $departureAgencyId,
-        private int $arrivalAgencyId,
-        private string $departurelAt,
+        private int $id,
+        private string $departureAgency,
+        private string $arrivalAgency,
+        private string $departureAt,
         private string $arrivalAt,
         private int $availableSeats,
         private int $totalSeats,
         private int $employeeId
     ) { }
 
-    public function setId(int $id) {
-        $this->id = $id;
+    public static function getAllowedColumns(): array {
+        return [
+            'departure_agency_id',
+            'arrival_agency_id',
+            'departure_at',
+            'arrival_at',
+            'seats_total',
+            'seats_available',
+            'employee_id',
+        ];
     }
 
     public function getId(): int {
         return $this->id;
     }
 
-    public function getDepartureAgencyId(): int {
-        return $this->departureAgencyId;
+    public function getDepartureAgency(): int {
+        return $this->departureAgency;
     }
 
-    public function getArrivalAgencyId(): int {
-        return $this->arrivalAgencyId;
+    public function getArrivalAgency(): int {
+        return $this->arrivalAgency;
     }
 
     public function getDeparturelAt(): string {
-        return $this->departurelAt;
+        return $this->departureAt;
     }
 
     public function getArrivalAt(): string {

@@ -15,37 +15,133 @@ class TravelRepository {
 
     public function findAvailableTravels(): array {
         $query = $this->pdo->prepare(
-            "SELECT * FROM travels 
-                WHERE seats_available > 0 AND departure_at > NOW()
-                ORDER BY departure_at ASC"
+            "SELECT 
+                t.id,
+                dep.city AS departure_agency,
+                t.departure_at,
+                arr.city AS arrival_agency,
+                t.arrival_at,
+                t.seats_available,
+                t.seats_total,
+                t.employee_id
+            FROM travels t
+
+            INNER JOIN agencies dep
+                ON dep.id = t.departure_agency_id
+
+            INNER JOIN agencies arr
+                ON arr.id = t.arrival_agency_id
+
+            WHERE t.seats_available > 0 AND t.departure_at > NOW()
+            ORDER BY t.departure_at ASC"
         );
 
         $query->execute();
 
-        return $query->fetchAll(PDO::FETCH_CLASS);
+        $results = $query->fetchAll(PDO::FETCH_CLASS);
+
+        $travels = [];
+        foreach($results as $item) {
+            $travelTmp = new Travel(
+                $item['id'],
+                $item['departure_agency_id'],
+                $item['arrival_agency_id'],
+                $item['departure_at'],
+                $item['arrival_at'],
+                $item['seats_available'],
+                $item['seats_total'],
+                $item['employee_id']
+            );
+            array_push($travels, $travelTmp);
+        };
+
+        return $travels;
     }
 
     public function findAllTravels(): array {
         $query = $this->pdo->prepare(
-            "SELECT * FROM travels 
-                ORDER BY departure_at ASC"
+            "SELECT 
+                t.id,
+                dep.city AS departure_agency,
+                t.departure_at,
+                arr.city AS arrival_agency,
+                t.arrival_at,
+                t.seats_available,
+                t.seats_total,
+                t.employee_id
+            FROM travels t
+
+            INNER JOIN agencies dep
+                ON dep.id = t.departure_agency_id
+
+            INNER JOIN agencies arr
+                ON arr.id = t.arrival_agency_id
+
+            ORDER BY t.departure_at ASC"
         );
 
         $query->execute();
 
-        return $query->fetchAll(PDO::FETCH_CLASS);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $travels = [];
+        foreach($results as $item) {
+            $travelTmp = new Travel(
+                $item['id'],
+                $item['departure_agency'],
+                $item['arrival_agency'],
+                $item['departure_at'],
+                $item['arrival_at'],
+                $item['seats_available'],
+                $item['seats_total'],
+                $item['employee_id']
+            );
+            array_push($travels, $travelTmp);
+        };
+
+        return $travels;    
     }
 
-    public function findTravelById(int $id): array {
+    public function findTravelById(int $id): Travel {
         $query = $this->pdo->prepare(
-            "SELECT * FROM travels WHERE id = :id"    
+            "SELECT 
+                t.id,
+                dep.city AS departure_agency,
+                t.departure_at,
+                arr.city AS arrival_agency,
+                t.arrival_at,
+                t.seats_available,
+                t.seats_total,
+                t.employee_id
+             FROM travels t 
+             
+             INNER JOIN agencies dep
+                ON dep.id = t.departure_agency_id
+
+             INNER JOIN agencies arr
+                ON arr.id = t.arrival_agency_id
+                
+             WHERE t.id = :id"    
         );
 
         $query->execute([
              ':id' => $id
          ]);
 
-        return $query->fetch(PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        $travel = new Travel(
+            $result['id'],
+            $result['departure_agency_id'],
+            $result['arrival_agency_id'],
+            $result['departure_at'],
+            $result['arrival_at'],
+            $result['seats_available'],
+            $result['seats_total'],
+            $result['employee_id']
+        );
+        
+        return $travel;    
     }
 
     public function deleteTravel(int $id): void {
@@ -58,61 +154,42 @@ class TravelRepository {
          ]);
     }
 
-    public function updateTravel(Travel $travel): void {
-        $query = $this->pdo->prepare(
-            "UPDATE travels
-            SET 
-                departure_agency_id = :departure_agency_id,
-                arrival_agency_id = :arrival_agency_id,
-                departure_at = :departure_at,
-                arrival_at = :arrival_at,
-                seats_total = :seats_total,
-                seats_available = :seats_available,
-                employee_id = :employee_id           
-            WHERE id = :id"    
-        );
+    public function updateTravel(int $id, array $data): void {
 
-        $query->execute([
-            ':id' => $travel->getId(),
-            ':departure_agency_id' => $travel->getDepartureAgencyId(),
-            ':arrival_agency_id' => $travel->getArrivalAgencyId(),
-            ':departure_at' => $travel->getDeparturelAt(),
-            ':arrival_at' => $travel->getArrivalAt(),
-            ':seats_total' => $travel->getTotalSeats(),
-            ':seats_available' => $travel->getAvaivableSeats(),
-            ':employee_id' => $travel->getEmployeeId()
-         ]);
+        $data = array_intersect_key($data, array_flip(Travel::getAllowedColumns()));
+
+        if (empty($data)) return;
+
+        $set = [];
+
+        foreach ($data as $column => $value) {
+            $set[] = "$column = :$column";
+        }
+
+        $sql = "UPDATE travels SET " . implode(', ', $set). " WHERE id = :id";
+
+        $data['id'] = $id;
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute($data);
     }
 
-    public function createTravel(Travel $travel): void {
-        $query = $this->pdo->prepare(
-            "INSERT INTO travels(
-                departure_agency_id,
-                arrival_agency_id,
-                departure_at,
-                arrival_at,
-                seats_total,
-                seats_available,
-                employee_id
-            ) VALUES (
-                :departure_agency_id,
-                :arrival_agency_id,
-                :departure_at,
-                :arrival_at,
-                :seats_total,
-                :seats_available,
-                :employee_id
-            )"    
+    public function createTravel(array $data): void {
+
+        $data = array_intersect_key($data, array_flip(Travel::getAllowedColumns()));
+
+        $columns = array_keys($data);
+
+        $placeholders = array_map(fn(string $column) => ':' .$column, $columns);
+
+        $sql = sprintf(
+            "INSERT INTO travels (%s) VALUES (%s)",
+            implode(', ', $columns),
+            implode(', ', $placeholders)
         );
 
-        $query->execute([
-                ':departure_agency_id' => $travel->getDepartureAgencyId(),
-                ':arrival_agency_id' => $travel->getArrivalAgencyId(),
-                ':departure_at' => $travel->getDeparturelAt(),
-                ':arrival_at' => $travel->getArrivalAt(),
-                ':seats_total' => $travel->getTotalSeats(),
-                ':seats_available' => $travel->getAvaivableSeats(),
-                ':employee_id' => $travel->getEmployeeId()
-         ]);
+        $query = $this->pdo->prepare($sql);
+
+        $query->execute($data);
     }
 }
