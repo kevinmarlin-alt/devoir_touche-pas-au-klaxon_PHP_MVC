@@ -3,15 +3,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-use App\Repositories\TravelRepository;
-use App\Models\Travel;
+use App\Controllers\TravelController;
 
 
-$test = new TravelRepository();
-
-$test->deleteTravel(7);
-echo "<br><br>";
-
-
-
-
+$test = new TravelController();
+$test->showAvailableTravels();

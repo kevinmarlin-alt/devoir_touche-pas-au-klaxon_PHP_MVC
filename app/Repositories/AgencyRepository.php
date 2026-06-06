@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Core\Database;
+use App\Models\Agency;
 use PDO;
 
 class AgencyRepository {
@@ -34,7 +35,19 @@ class AgencyRepository {
         return $query->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createAgency(string $city): void {
+    public function findByName(string $city): array {
+        $query = $this->pdo->prepare(
+            "SELECT * FROM agencies WHERE city = :city"
+        );
+
+        $query->execute([
+            ':city' => $city
+        ]);
+
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function create(string $city): void {
         $query = $this->pdo->prepare(
             "INSERT INTO agencies(city) VALUES (:city)"
         );
@@ -44,7 +57,7 @@ class AgencyRepository {
         ]);
     }
 
-    public function updateAgency(int $id, string $city): void {
+    public function update(int $id, string $city): void {
         $query = $this->pdo->prepare(
             "UPDATE agencies SET city = :city WHERE id = :id"
         );
@@ -55,7 +68,7 @@ class AgencyRepository {
         ]);
     }
     
-    public function deleteAgency(int $id): void {
+    public function delete(int $id): void {
         $query = $this->pdo->prepare(
             "DELETE FROM agencies WHERE id = :id"
         );
