@@ -31,11 +31,11 @@ class Travel {
         return $this->id;
     }
 
-    public function getDepartureAgency(): int {
+    public function getDepartureAgency(): string {
         return $this->departureAgency;
     }
 
-    public function getArrivalAgency(): int {
+    public function getArrivalAgency(): string {
         return $this->arrivalAgency;
     }
 

@@ -6,8 +6,8 @@ use Buki\Router\Router;
 $router = new Router();
 
 $router->get('/', function () {
-    (new TravelController)->showAllTravels();
+    (new TravelController)->index();
 });
 
 
-$router->run();
+$router->run();  
