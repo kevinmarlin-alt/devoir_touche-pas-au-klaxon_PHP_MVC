@@ -8,5 +8,14 @@
 <body>
     <header>
         <h1>TOUCHE PAS AU KLAXON</h1>
-        <button>Connexion</button>
+        <?php if(isset($_SESSION['user'])): ?>
+            <a href="/travels">Créer un trajet</a>
+            <p>Bonjour 
+                <?= $_SESSION['user']['firstname'] ?> 
+                <?= $_SESSION['user']['lastname'] ?> 
+            </p>
+            <a href="/logout">Déconnexion</a>
+        <?php else : ?>
+                <a href="/login">Se connecter</a>
+        <?php endif; ?>
     </header>

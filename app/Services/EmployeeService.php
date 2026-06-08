@@ -5,12 +5,12 @@ use App\Repositories\EmployeeRepository;
 use Exception;
 
 class EmployeeService {
-
+    private EmployeeRepository $employeeRepository;
     public function __construct(
-        private EmployeeRepository $employeeRepository
+        
     )
     { 
-        $employeeRepository = new EmployeeRepository();
+        $this->employeeRepository = new EmployeeRepository();
     }
 
     public function getAllEmployees(): array {

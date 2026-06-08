@@ -9,7 +9,7 @@ class TravelController extends Controller {
 
     public function index(): void {
         $services = new TravelService();
-        $travels = $services->getAllTravels();
+        $travels = $services->getAvailableTravels();
         $this->render(
             'home', 
             compact('travels')
