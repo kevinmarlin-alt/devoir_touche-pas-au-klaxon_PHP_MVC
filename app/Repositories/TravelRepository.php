@@ -18,9 +18,9 @@ class TravelRepository {
             "SELECT 
                 t.id,
                 dep.city AS departure_agency,
-                t.departure_at,
+                DATE_FORMAT(t.departure_at, '%d/%m/%Y %H:%i') AS departure_at,
                 arr.city AS arrival_agency,
-                t.arrival_at,
+                DATE_FORMAT(t.arrival_at, '%d/%m/%Y %H:%i') AS arrival_at,
                 t.seats_available,
                 t.seats_total,
                 t.employee_id
@@ -38,14 +38,14 @@ class TravelRepository {
 
         $query->execute();
 
-        $results = $query->fetchAll(PDO::FETCH_CLASS);
+        $results = $query->fetchAll(PDO::FETCH_ASSOC);
 
         $travels = [];
         foreach($results as $item) {
             $travelTmp = new Travel(
                 $item['id'],
-                $item['departure_agency_id'],
-                $item['arrival_agency_id'],
+                $item['departure_agency'],
+                $item['arrival_agency'],
                 $item['departure_at'],
                 $item['arrival_at'],
                 $item['seats_available'],
