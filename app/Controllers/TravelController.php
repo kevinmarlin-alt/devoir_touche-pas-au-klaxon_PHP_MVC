@@ -2,17 +2,17 @@
 namespace App\Controllers;
 
 use App\Services\TravelService;
+use App\Core\Controller;
+use App\Models\Travel;
 
-class TravelController {
+class TravelController extends Controller {
 
-    public function showAvailableTravels(): void {
-
+    public function index(): void {
         $services = new TravelService();
-
         $travels = $services->getAllTravels();
-
-        var_dump($travels);
-
+        $this->render(
+            'home', 
+            compact('travels')
+        );
     }
 }
-
