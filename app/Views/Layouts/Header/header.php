@@ -12,9 +12,9 @@
         <?php if(isset($_SESSION['user'])): ?>
             <?php switch($_SESSION['user']['role']):
             case 'ADMIN': ?>
-                <a href="/travels">Utilisateurs</a>
-                <a href="/travels">Agences</a>
-                <a href="/travels">Trajets</a>
+                <a href="/dashboard/#users">Utilisateurs</a>
+                <a href="/dashboard/#agencies">Agences</a>
+                <a href="/dashboard/#travels">Trajets</a>
             <?php break; ?>
             <?php case 'USER': ?>
                 <a href="#" id="createTravelBtn">Créer un trajet</a>

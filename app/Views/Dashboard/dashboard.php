@@ -1,5 +1,5 @@
 <h2>Dashboard</h2>
-<section>
+<section id="users">
     <h3>Utilisateurs</h3>
     <table border=1>
         <caption>Liste des utilisateurs</caption>
@@ -23,7 +23,7 @@
         <?php endforeach; ?>
     </table>
 </section>
-<section>
+<section id="agencies">
     <h3>Agences</h3>
     <table border=1>
         <caption>Liste des agences</caption>
@@ -39,7 +39,7 @@
         <?php endforeach; ?>    
     </table>
 </section>
-<section>
+<section id="travels">
     <h3>Trajets</h3>
     <table border=1>
         <caption>Liste des trajets</caption>
