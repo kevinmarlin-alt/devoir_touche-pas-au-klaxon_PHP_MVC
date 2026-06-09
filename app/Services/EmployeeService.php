@@ -42,4 +42,10 @@ class EmployeeService {
         }
         return $employee;
     }
+
+    public function hashAndUpdatePassword(string $email, string $password): void {
+        $passwordHashed = password_hash($password, PASSWORD_BCRYPT);
+        $this->employeeRepository->updatePasswordByEmail($email, $passwordHashed);
+    }
 }
+

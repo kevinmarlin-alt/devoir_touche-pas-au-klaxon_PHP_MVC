@@ -2,6 +2,7 @@
 
 use App\Controllers\TravelController;
 use App\Controllers\LoginController;
+use App\Middlewares\AuthMiddleware;
 use Buki\Router\Router;
 
 $router = new Router();
@@ -11,7 +12,7 @@ $router->get('/', function () {
 });
 
 $router->get('/logout', function () {
-    
+    AuthMiddleware::handle();
     (new LoginController)->logout();
 });
 
@@ -22,6 +23,11 @@ $router->get('/login', function () {
 $router->post('/',function () {
     (new LoginController)->login();
     
+});
+
+$router->delete('/travels/:id', function (int $id): void {
+    AuthMiddleware::handle();
+    (new TravelController)->deleteTravel($id);
 });
 
 

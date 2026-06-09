@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Repositories\EmployeeRepository;
 use App\Repositories\LoginRepository;
 use Exception;
 
@@ -12,13 +13,18 @@ class LoginService {
         $this->loginRepository = new LoginRepository;
     }
 
-    public function getEmplyeeByEmail(string $email): array {
-        $employee = $this->loginRepository->findEmployeeByEmail($email);
+    public function getEmplyeeByEmail(string $email) {
+        return $this->loginRepository->findEmployeeByEmail($email);
+       }
 
-        if(!$employee) {
-            throw new Exception("Email incorrect !");
+    public function checkPasswordIsEmpty(string $email): bool {
+        $employeeRepository = new EmployeeRepository();
+        $password = $employeeRepository->findPasswordByEmail($email);
+
+        if($password === "") {
+            return true;
         }
 
-        return $employee;
+        return false;
     }
 }

@@ -12,7 +12,7 @@ class LoginRepository {
         $this->pdo = Database::getConnection();
     }
 
-    public function findEmployeeByEmail(string $email): array {
+    public function findEmployeeByEmail(string $email) {
         $query = $this->pdo->prepare(
             "SELECT 
                 id, 
@@ -32,6 +32,9 @@ class LoginRepository {
         ]);
 
         return $query->fetch(PDO::FETCH_ASSOC);
+
     }
+
+
 
 }

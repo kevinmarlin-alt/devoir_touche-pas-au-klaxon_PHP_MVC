@@ -11,8 +11,13 @@ class TravelController extends Controller {
         $services = new TravelService();
         $travels = $services->getAvailableTravels();
         $this->render(
-            'home', 
+            'Home/home', 
             compact('travels')
         );
+    }
+
+    public function deleteTravel(int $id) {
+        (new TravelService())->deleteTravel($id);
+
     }
 }
