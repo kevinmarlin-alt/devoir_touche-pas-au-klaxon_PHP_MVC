@@ -5,23 +5,18 @@ use App\Repositories\AgencyRepository;
 use Exception;
 
 class AgencyService {
-
+    private AgencyRepository $agencyRepository;
     public function __construct(
-        private AgencyRepository $agencyRepository
+        
     )
     { 
-        $agencyRepository = new AgencyRepository();
+        $this->agencyRepository = new AgencyRepository();
     }
 
     public function getAllAgencies(): array {
         
-        $agencies = $this->agencyRepository->findAll();
+        return $this->agencyRepository->findAll();
 
-        if(!$agencies) {
-            throw new Exception("Il n'y a pas d'agence actuellement.");
-        }
-
-        return $agencies;
     }
 
     public function getAgencyByName(string $city): array {

@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <script src="/assets/header.js" defer></script>
-    <title>Document</title>
+    <title>TOUCHE PAS AU KLAXON - Accueil</title>
 </head>
 <body>
     <header>
-        <h1>TOUCHE PAS AU KLAXON</h1>
         <?php if(isset($_SESSION['user'])): ?>
             <?php switch($_SESSION['user']['role']):
             case 'ADMIN': ?>
-                <a href="/travels">Utilisateurs</a>
-                <a href="/travels">Agences</a>
-                <a href="/travels">Trajets</a>
+                <a href="/dashboard">
+                    <h1>TOUCHE PAS AU KLAXON</h1>
+                </a>
+                <a href="/dashboard/#users">Utilisateurs</a>
+                <a href="/dashboard/#agencies">Agences</a>
+                <a href="/dashboard/#travels">Trajets</a>
             <?php break; ?>
+
             <?php case 'USER': ?>
+                <h1>TOUCHE PAS AU KLAXON</h1>
                 <a href="#" id="createTravelBtn">Créer un trajet</a>
             <?php break; ?>
+
             <?php endswitch; ?>
             <p>Bonjour 
                 <?= $_SESSION['user']['firstname'] ?> 
@@ -26,6 +32,7 @@
             </p>
             <a href="/logout">Déconnexion</a>
         <?php else : ?>
+            <h1>TOUCHE PAS AU KLAXON</h1>
             <a href="/login">Se connecter</a>
         <?php endif; ?>
     </header>

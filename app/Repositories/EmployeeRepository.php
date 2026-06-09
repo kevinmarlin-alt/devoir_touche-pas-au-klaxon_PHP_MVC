@@ -19,7 +19,7 @@ class EmployeeRepository {
 
         $query->execute();
 
-        return $query->fetchAll(PDO::FETCH_CLASS);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function findById(int $id): array {
