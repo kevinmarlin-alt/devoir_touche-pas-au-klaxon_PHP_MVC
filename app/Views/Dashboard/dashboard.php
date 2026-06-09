@@ -44,11 +44,25 @@
     <table border=1>
         <caption>Liste des trajets</caption>
         <tr>
+            <th>ID</th>
             <th>Départ</th>
             <th>Date & heure</th>
             <th>Arrivée</th>
             <th>Date & heure</th>
             <th>Places</th>
+            <th></th>
         </tr>
-    </table>
+        <?php foreach($travels as $travel): ?>
+            <tr>
+                <td><?= $travel->getId() ?></td>
+                <td><?= $travel->getDepartureAgency() ?></td>
+                <td><?= $travel->getDeparturelAt() ?></td>
+                <td><?= $travel->getArrivalAgency() ?></td>
+                <td><?= $travel->getArrivalAt() ?></td>
+                <td><?= $travel->getAvaivableSeats() ?></td>
+                <td>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>      </table>
 </section>
