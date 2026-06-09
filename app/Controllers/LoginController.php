@@ -10,12 +10,11 @@ class LoginController {
             header('Location: /');
             exit;
         }
-        require __DIR__ . "/../Views/login.php";
+        require __DIR__ . "/../Views/Login/login.php";
     }
 
     public function logout(): void {
         session_destroy();
-        var_dump($_SESSION);
         header('Location: /');
 
     }
@@ -25,11 +24,18 @@ class LoginController {
         $password = $_POST["password"] ?? "";
 
         $employeeService = new LoginService();
+        
         $employee = $employeeService->getEmplyeeByEmail($email);
-        var_dump($employee);
+        if(!$employee) {
+            $error = "Email ou mot de passe incorrect !";
+            require_once __DIR__ . '/../Views/Login/login.php';
+            exit;
+        }
 
-        if($employee['passeword'] !== $password) {
-            header('Location: /login');
+        $passwordMatch = password_verify($password, $employee['passeword']);
+        if(!$passwordMatch) {
+            $error = "Email ou mot de passe incorrect !";
+            require_once __DIR__ . '/../Views/Login/login.php';
             exit;
         }
 
@@ -37,11 +43,11 @@ class LoginController {
             'id' => $employee['id'],
             'lastname' => $employee['lastname'],
             'firstname' => $employee['firstname'],
-            'email' => $employee['email'],
-            'password' => $employee['passeword'],
             'role' => $employee['role']
         ];
 
         $this->index();
     }
+
+
 }
