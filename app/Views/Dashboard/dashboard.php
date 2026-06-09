@@ -1,3 +1,6 @@
+<nav>
+    <a href="/">Page d'accueil</a>
+</nav>
 <h2>Dashboard</h2>
 <section id="users">
     <h3>Utilisateurs</h3>
@@ -30,11 +33,16 @@
         <tr>
             <th>ID</th>
             <th>Ville</th>
+            <th></th>
         </tr>
         <?php foreach($agencies as $agency): ?>
             <tr>
                 <td><?= $agency['id'] ?></td>
                 <td><?= $agency['city'] ?></td>
+                <td>
+                    <a href="">Update</a>
+                    <a href="">Delete</a>
+                </td>
             </tr>
         <?php endforeach; ?>    
     </table>
