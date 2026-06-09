@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\TravelController;
+use App\Controllers\HomeController;
 use App\Controllers\LoginController;
 use App\Controllers\AdminController;
 use App\Middlewares\AdminMiddleware;
@@ -11,7 +11,7 @@ use App\Core\Controller;
 $router = new Router();
 
 $router->get('/', function () {
-    (new TravelController)->index();
+    (new HomeController)->index();
 });
 
 $router->get('/logout', function () {
@@ -28,9 +28,14 @@ $router->post('/',function () {
     
 });
 
+$router->post('/travels/create', function () {
+    AuthMiddleware::handle();
+    (new HomeController)->createNewTravel();
+});
+
 $router->delete('/travels/:id', function (int $id): void {
     AuthMiddleware::handle();
-    (new TravelController)->deleteTravel($id);
+    (new HomeController)->deleteTravel($id);
 });
 
 $router->get('/dashboard', function () {
