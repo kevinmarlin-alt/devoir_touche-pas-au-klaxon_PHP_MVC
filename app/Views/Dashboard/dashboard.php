@@ -28,8 +28,15 @@
     <table border=1>
         <caption>Liste des agences</caption>
         <tr>
+            <th>ID</th>
             <th>Ville</th>
         </tr>
+        <?php foreach($agencies as $agency): ?>
+            <tr>
+                <td><?= $agency['id'] ?></td>
+                <td><?= $agency['city'] ?></td>
+            </tr>
+        <?php endforeach; ?>    
     </table>
 </section>
 <section>
