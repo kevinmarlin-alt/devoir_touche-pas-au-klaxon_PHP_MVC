@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Employee;
 use App\Repositories\EmployeeRepository;
 use Exception;
 
@@ -15,10 +16,20 @@ class EmployeeService {
 
     public function getAllEmployees(): array {
       
-        $employees = $this->employeeRepository->findAll();
-
-        if(!$employees) {
-            throw new Exception("Il n'y a pas d'employés pour le moment.");
+        $result = $this->employeeRepository->findAll();
+        $employees = [];
+        foreach($result as $employee) {
+            array_push(
+                $employees, 
+                new Employee(
+                    $employee['id'],
+                    $employee['firstname'],
+                    $employee['lastname'],
+                    $employee['phone'],
+                    $employee['email'],
+                    $employee['role']
+                )
+            );
         }
 
         return $employees;

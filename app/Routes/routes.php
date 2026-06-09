@@ -2,8 +2,11 @@
 
 use App\Controllers\TravelController;
 use App\Controllers\LoginController;
+use App\Controllers\AdminController;
+use App\Middlewares\AdminMiddleware;
 use App\Middlewares\AuthMiddleware;
 use Buki\Router\Router;
+use App\Core\Controller;
 
 $router = new Router();
 
@@ -28,6 +31,18 @@ $router->post('/',function () {
 $router->delete('/travels/:id', function (int $id): void {
     AuthMiddleware::handle();
     (new TravelController)->deleteTravel($id);
+});
+
+$router->get('/dashboard', function () {
+    AuthMiddleware::handle();
+    AdminMiddleware::handle();
+
+    (new AdminController)->index();
+
+});
+
+$router->notFound(function () {
+    require __DIR__."/../Views/Layouts/404.php";
 });
 
 
