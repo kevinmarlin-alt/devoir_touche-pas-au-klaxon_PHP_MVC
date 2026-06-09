@@ -3,3 +3,6 @@
 
 # Config
 /config/
+
+# other
+public/assets/.DS_Store
