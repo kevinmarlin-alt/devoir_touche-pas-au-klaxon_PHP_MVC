@@ -22,22 +22,25 @@ class AgencyController extends Controller{
             (new AgencyService)->createAgency($city);
             $_SESSION['banner'] =  'La nouvelle agence a bien été ajoutée !';
             header('Location: /dashboard/#agencies');
+            exit;
         } else {
             $_SESSION['banner'] =  'Le nom de la ville ne peut pas être vide';
             header('Location: /dashboard/#agencies');
+            exit;
         }
         
     }
 
     public function deleteAgency(int $id): void {
         (new AgencyService)->deleteAgencyById($id);
+        $_SESSION['banner'] = "L'agence a bien été supprimée !";
         header('Location: /dashboard/#agencies');
+        exit;
     }
 
     public function updateAgency(int $id, array $data): void {
         $city = $data['city'];
         (new AgencyService)->updateAgency($id, $city);
         $_SESSION['banner'] = "Le nom de l'agence a bien été modifié !";
-        header('Location: /dashboard/#agencies');
     }
 }

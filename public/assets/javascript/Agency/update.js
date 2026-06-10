@@ -13,4 +13,6 @@ async function handleSubmit(event) {
         },
         body: JSON.stringify(data)
     })
+
+    window.location.href = '/dashboard/#agencies';
 }
