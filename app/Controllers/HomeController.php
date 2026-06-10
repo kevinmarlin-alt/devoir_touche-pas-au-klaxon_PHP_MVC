@@ -14,7 +14,7 @@ class HomeController extends Controller {
         $agencyService = new AgencyService;
         $agencies = $agencyService->getAllAgencies();
         $this->render(
-            'Home/home', 
+            'home', 
             compact('travels', 'agencies')
         );
     }

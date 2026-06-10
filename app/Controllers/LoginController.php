@@ -2,7 +2,6 @@
 namespace App\Controllers;
 
 use App\Services\LoginService;
-use Exception;
 
 class LoginController {
     public function index(): void {
@@ -10,7 +9,7 @@ class LoginController {
             header('Location: /');
             exit;
         }
-        require __DIR__ . "/../Views/Login/login.php";
+        require __DIR__ . "/../Views/login.php";
     }
 
     public function logout(): void {
@@ -28,14 +27,14 @@ class LoginController {
         $employee = $employeeService->getEmplyeeByEmail($email);
         if(!$employee) {
             $error = "Email ou mot de passe incorrect !";
-            require_once __DIR__ . '/../Views/Login/login.php';
+            require_once __DIR__ . '/../Views/login.php';
             exit;
         }
 
         $passwordMatch = password_verify($password, $employee['passeword']);
         if(!$passwordMatch) {
             $error = "Email ou mot de passe incorrect !";
-            require_once __DIR__ . '/../Views/Login/login.php';
+            require_once __DIR__ . '/../Views/login.php';
             exit;
         }
 

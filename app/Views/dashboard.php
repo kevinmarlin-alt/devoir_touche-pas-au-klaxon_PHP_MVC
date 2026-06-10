@@ -1,6 +1,11 @@
+<script src="/assets/javascript/dashboard.js" type="text/javascript" defer></script>
 <nav>
     <a href="/">Page d'accueil</a>
 </nav>
+<?php if(isset($_SESSION['banner'])): ?>
+    <p><?= $_SESSION['banner'] ?></p>
+<?php endif; ?>
+
 <h2>Dashboard</h2>
 <section id="users">
     <h3>Utilisateurs</h3>
@@ -26,8 +31,13 @@
         <?php endforeach; ?>
     </table>
 </section>
+
 <section id="agencies">
     <h3>Agences</h3>
+
+    <!-- Form to create a new agency -->
+    <a href="/agencies/create">Ajouter une nouvelle agence</a>
+
     <table border=1>
         <caption>Liste des agences</caption>
         <tr>
@@ -36,16 +46,17 @@
             <th></th>
         </tr>
         <?php foreach($agencies as $agency): ?>
-            <tr>
-                <td><?= $agency['id'] ?></td>
-                <td><?= $agency['city'] ?></td>
+            <tr data-id="<?= $agency['id'] ?>">
+                <td><?= htmlspecialchars($agency['id']) ?></td>
+                <td><?= htmlspecialchars($agency['city']) ?></td>
                 <td>
-                    <a href="">Update</a>
-                    <a href="">Delete</a>
+                    <a href="/agencies/update/<?= $agency['id'] ?>">Update</a>
+                    <a href="#" class="delete_btn">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>    
     </table>
+
 </section>
 <section id="travels">
     <h3>Trajets</h3>
