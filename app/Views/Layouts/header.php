@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <script src="/assets/header.js" defer></script>
+    
     <title>TOUCHE PAS AU KLAXON - Accueil</title>
 </head>
 <body>
@@ -21,6 +21,7 @@
             <?php break; ?>
 
             <?php case 'USER': ?>
+                <script src="/assets/javascript/header.js" type="text/javascript" defer></script>
                 <h1>TOUCHE PAS AU KLAXON</h1>
                 <a href="#" id="createTravelBtn">Créer un trajet</a>
             <?php break; ?>

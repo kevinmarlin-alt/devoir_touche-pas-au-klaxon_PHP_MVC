@@ -4,5 +4,5 @@ createTravelButton.addEventListener('click', showCreateTravelForm);
 
 function showCreateTravelForm(event) {
     event.preventDefault();
-
+    console.log('test')
 }

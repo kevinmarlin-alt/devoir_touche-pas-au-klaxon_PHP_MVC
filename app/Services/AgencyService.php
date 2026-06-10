@@ -31,6 +31,10 @@ class AgencyService {
 
     }
 
+    public function getAgencyById(int $id): array {
+        return $this->agencyRepository->findById($id);
+    }
+
     public function createAgency(string $city): void {
         $this->agencyRepository->create($city);
 
@@ -40,7 +44,7 @@ class AgencyService {
         $this->agencyRepository->update($id, $city);
     }
 
-    public function deleteAgency(int $id): void {
+    public function deleteAgencyById(int $id): void {
         $this->agencyRepository->delete($id);
     }
 }
