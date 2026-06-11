@@ -44,6 +44,15 @@ class TravelService {
     }
 
     public function createTravel(array $data): void {
+
+        if($data['departure_agency_id'] === $data['arrival_agency_id']) {
+            exit;
+        }
+
+        if($data['departure_at'] > $data['arrival_at']) {
+            exit;
+        }
+
         $this->travelRepository->createTravel($data);
     }
 }

@@ -21,9 +21,9 @@
             <?php break; ?>
 
             <?php case 'USER': ?>
-                <script src="/assets/javascript/header.js" type="text/javascript" defer></script>
+                <!-- <script src="/assets/javascript/header.js" type="text/javascript" defer></script> -->
                 <h1>TOUCHE PAS AU KLAXON</h1>
-                <a href="#" id="createTravelBtn">Créer un trajet</a>
+                <a href="/travels/create" id="createTravelBtn">Créer un trajet</a>
             <?php break; ?>
 
             <?php endswitch; ?>

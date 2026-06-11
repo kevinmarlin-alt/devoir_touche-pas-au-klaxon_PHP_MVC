@@ -4,6 +4,7 @@ use App\Controllers\HomeController;
 use App\Controllers\LoginController;
 use App\Controllers\DashboardController;
 use App\Controllers\AgencyController;
+use App\Controllers\TravelController;
 
 use App\Middlewares\AdminMiddleware;
 use App\Middlewares\AuthMiddleware;
@@ -30,6 +31,19 @@ $router->get('/login', function () {
 $router->post('/',function () {
     (new LoginController)->login();
     
+});
+
+$router->group('/travels', function($router) {
+
+    $router->get('/create', function() {
+        AuthMiddleware::handle();
+        (new TravelController)->indexCreate();
+    });
+
+    $router->post('/create', function() {
+        AuthMiddleware::handle();
+        (new TravelController)->createNewTravel();
+    });
 });
 
 $router->group('/agencies', function($router) {

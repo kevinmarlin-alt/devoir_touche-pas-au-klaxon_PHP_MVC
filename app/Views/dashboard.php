@@ -1,8 +1,14 @@
-<script src="/assets/javascript/dashboard.js" type="text/javascript" defer></script>
+<head>
+    <script src="/assets/javascript/dashboard.js" type="text/javascript" defer></script>
+</head>
 <nav>
     <a href="/">Page d'accueil</a>
 </nav>
-<?php if(isset($_SESSION['banner'])): ?>
+<?php
+
+use App\Components\TravelsTable;
+
+ if(isset($_SESSION['banner'])): ?>
     <p><?= $_SESSION['banner'] ?></p>
 <?php endif; ?>
 
@@ -60,6 +66,7 @@
 </section>
 <section id="travels">
     <h3>Trajets</h3>
+    <?php TravelsTable::renderAllTravels('dashboard'); ?>        
     <table border=1>
         <caption>Liste des trajets</caption>
         <tr>
