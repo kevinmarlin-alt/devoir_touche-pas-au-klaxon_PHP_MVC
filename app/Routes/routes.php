@@ -10,7 +10,6 @@ use App\Middlewares\AdminMiddleware;
 use App\Middlewares\AuthMiddleware;
 
 use Buki\Router\Router;
-use App\Core\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 $router = new Router();
@@ -40,9 +39,27 @@ $router->group('/travels', function($router) {
         (new TravelController)->indexCreate();
     });
 
+    $router->get('/update/:id', function($id) {
+        AuthMiddleware::handle();
+        (new TravelController)->indexUpdate($id);
+    });
+
     $router->post('/create', function() {
         AuthMiddleware::handle();
         (new TravelController)->createNewTravel();
+    });
+
+    $router->put('/:id', function(Request $request, int $id): void {
+        AuthMiddleware::handle();
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+        (new TravelController)->updateTravel($id, $data);
+
+    });
+
+    $router->delete('/:id', function (int $id): void {
+        AuthMiddleware::handle();
+        (new HomeController)->deleteTravel($id);
     });
 });
 
@@ -84,10 +101,7 @@ $router->group('/agencies', function($router) {
 //     (new HomeController)->createNewTravel();
 // });
 
-$router->delete('/travels/:id', function (int $id): void {
-    AuthMiddleware::handle();
-    (new HomeController)->deleteTravel($id);
-});
+
 
 $router->get('/dashboard', function () {
     AuthMiddleware::handle();

@@ -1,3 +1,7 @@
+<?php if(isset($_SESSION['banner'])): ?>
+    <p style="color: red"><?= $_SESSION['banner'] ?></p>
+<?php endif; ?>
+
 <?php
 
 use App\Components\TravelsTable;
@@ -9,5 +13,4 @@ use App\Components\TravelsTable;
 <?php endif; 
 
 TravelsTable::renderAvailableTravels();
-
 ?>

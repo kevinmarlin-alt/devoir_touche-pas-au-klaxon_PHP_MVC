@@ -21,10 +21,10 @@
                 <td><?=  $travel->getId() ?></td>
             <?php endif; ?>
             <td><?=  $travel->getDepartureAgency() ?></td>
-            <td><?=  $travel->getDeparturelAt() ?></td>
+            <td><?=  $travel->getDepartureAt() ?></td>
             <td><?=  $travel->getArrivalAgency() ?></td>
             <td><?=  $travel->getArrivalAt() ?></td>
-            <td><?=  $travel->getAvaivableSeats() ?></td>
+            <td><?=  $travel->getAvailableSeats() ?></td>
             <?php if(isset($_SESSION['user'])): 
                 switch($scope):
                 case 'dashboard':?>
@@ -36,7 +36,7 @@
                 <td>
                     <a href="/">Read</a>
                     <?php if($travel->getEmployeeId() === $_SESSION['user']['id']): ?>
-                        <a href="/">Update</a>
+                        <a href="/travels/update/<?= $travel->getId() ?>">Update</a>
                         <a href='travels/<?= $travel->getId() ?>'>Delete</a>
                     <?php endif; ?>
                 </td>                

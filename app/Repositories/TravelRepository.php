@@ -132,8 +132,8 @@ class TravelRepository {
 
         $travel = new Travel(
             $result['id'],
-            $result['departure_agency_id'],
-            $result['arrival_agency_id'],
+            $result['departure_agency'],
+            $result['arrival_agency'],
             $result['departure_at'],
             $result['arrival_at'],
             $result['seats_available'],
@@ -155,27 +155,21 @@ class TravelRepository {
     }
 
     public function updateTravel(int $id, array $data): void {
-
-        $data = array_intersect_key($data, array_flip(Travel::getAllowedColumns()));
-
-        if (empty($data)) return;
-
         $set = [];
-
         foreach ($data as $column => $value) {
-            $set[] = "$column = :$column";
+            array_push($set, "$column = :$column");
         }
-
+        
         $sql = "UPDATE travels SET " . implode(', ', $set). " WHERE id = :id";
 
         $data['id'] = $id;
-
+        $_SESSION['sql'] = $sql;
+        $_SESSION['data'] = $data;
         $query = $this->pdo->prepare($sql);
         $query->execute($data);
     }
 
     public function createTravel(array $data): void {
-        //$data = array_intersect_key($data, array_flip(Travel::getAllowedColumns()));
         $columns = array_keys($data);
    
         $placeholders = array_map(fn(string $column) => ':' .$column, $columns);

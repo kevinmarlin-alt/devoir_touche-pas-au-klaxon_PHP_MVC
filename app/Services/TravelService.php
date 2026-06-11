@@ -30,9 +30,11 @@ class TravelService {
             throw new Exception("Il n'y a actuellement aucun trajet enregistré.");
         }
 
-
-
         return $travels;
+    }
+
+    public function getTravelById(int $id) {
+        return $this->travelRepository->findTravelById($id);
     }
 
     public function deleteTravel(int $id): void {
@@ -40,6 +42,9 @@ class TravelService {
     }
 
     public function updateTravel(int $id, array $data): void {
+        $data['departure_at'] = new DateTime($data['departure_at'])->format('Y-m-d H:i:s');
+        $data['arrival_at'] = new DateTime($data['arrival_at'])->format('Y-m-d H:i:s');
+        
         $this->travelRepository->updateTravel($id, $data);
     }
 

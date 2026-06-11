@@ -16,19 +16,22 @@ public function indexCreate(): void {
         $this->render('Travel/create', compact('employee', 'agencies'));
     }
 
-    public function createNewTravel(): void {
-        $data = [
-            'departure_agency_id' => $_POST['departure_agency_id'],
-            'arrival_agency_id' => $_POST['arrival_agency_id'],
-            'departure_at' => $_POST['departure_at'],
-            'arrival_at' => $_POST['arrival_at'],
-            'seats_total' => $_POST['seats_total'],
-            'seats_available' => $_POST['seats_total'],
-            'employee_id' => $_POST['employee_id']
-        ];
-        (new TravelService)->createTravel($data);
-        header('Location: /');
+    public function indexUpdate(int $id): void {
+        $travel = (new TravelService)->getTravelById($id);
+        $agencies = (new AgencyService)->getAllAgencies();
+        $this->render('Travel/update', compact('travel', 'agencies'));
+    }
 
+    public function createNewTravel(): void {
+        $_POST['seats_available'] = $_POST['seats_total'];
+        (new TravelService)->createTravel($_POST);
+        header('Location: /');
+    }
+
+    public function updateTravel(int $id, array $data): void {
+        $_SESSION['data'] = $data;
+        (new TravelService)->updateTravel($id, $data);
+        $_SESSION['banner'] = "Les modifications du trajet ont bien été enregistrées !";
     }
 
 }
