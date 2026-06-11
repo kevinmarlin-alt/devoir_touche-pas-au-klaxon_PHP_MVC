@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Models\Travel;
 use App\Repositories\TravelRepository;
+use DateTime;
 use Exception;
 
 class TravelService {
@@ -44,13 +44,15 @@ class TravelService {
     }
 
     public function createTravel(array $data): void {
-
+        $data['departure_at'] = new DateTime($data['departure_at'])->format('Y-m-d H:i:s');
+        $data['arrival_at'] = new DateTime($data['arrival_at'])->format('Y-m-d H:i:s');
+        
         if($data['departure_agency_id'] === $data['arrival_agency_id']) {
-            exit;
+            exit();
         }
 
         if($data['departure_at'] > $data['arrival_at']) {
-            exit;
+            exit();
         }
 
         $this->travelRepository->createTravel($data);

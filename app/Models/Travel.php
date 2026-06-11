@@ -22,8 +22,7 @@ class Travel {
             'departure_at',
             'arrival_at',
             'seats_total',
-            'seats_available',
-            'employee_id',
+            'employee_id'
         ];
     }
 

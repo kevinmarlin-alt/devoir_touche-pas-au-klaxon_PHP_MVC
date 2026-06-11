@@ -9,9 +9,7 @@ use App\Services\TravelService;
 
 class TravelController extends Controller {
 
-    private array $travelsTest = [];
-
-    public function indexCreate(): void {
+public function indexCreate(): void {
         $id = $_SESSION['user']['id'];
         $employee = (new EmployeeService)->getEmployeeById($id);
         $agencies = (new AgencyService)->getAllAgencies();
@@ -25,11 +23,12 @@ class TravelController extends Controller {
             'departure_at' => $_POST['departure_at'],
             'arrival_at' => $_POST['arrival_at'],
             'seats_total' => $_POST['seats_total'],
+            'seats_available' => $_POST['seats_total'],
             'employee_id' => $_POST['employee_id']
         ];
-
         (new TravelService)->createTravel($data);
-        header('Location: /travels/create');
+        header('Location: /');
+
     }
 
 }

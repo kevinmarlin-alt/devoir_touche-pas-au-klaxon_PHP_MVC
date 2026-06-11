@@ -56,7 +56,7 @@ CREATE TABLE travels (
     arrival_at DATETIME NOT NULL,
 
     seats_total INT NOT NULL,
-    seats_available INT DEFAULT seats_total,
+    seats_available INT DEFAULT 0,
 
     employee_id INT NOT NULL,
     PRIMARY KEY (id),
