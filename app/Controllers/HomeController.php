@@ -24,7 +24,6 @@ class HomeController extends Controller {
 
     public function deleteTravel(int $id) {
         (new TravelService())->deleteTravel($id);
-
     }
 
     // function createNewTravel

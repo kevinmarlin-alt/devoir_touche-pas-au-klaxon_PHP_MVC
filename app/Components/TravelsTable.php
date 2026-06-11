@@ -14,4 +14,8 @@ class TravelsTable {
         $travels = (new TravelService)->getAllTravels();
         require __DIR__."/../Views/Travel/index.php";
     }
+
+    static function emptyAvailableTravels(): bool {
+        return true;
+    }
 }

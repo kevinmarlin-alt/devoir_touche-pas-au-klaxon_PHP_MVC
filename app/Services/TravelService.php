@@ -39,6 +39,7 @@ class TravelService {
 
     public function deleteTravel(int $id): void {
         $this->travelRepository->deleteTravel($id);
+        $_SESSION['banner'] = "Le trajet a bien été supprimé !";
     }
 
     public function updateTravel(int $id, array $data): void {

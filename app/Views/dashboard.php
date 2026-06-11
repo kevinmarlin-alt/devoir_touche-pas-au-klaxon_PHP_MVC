@@ -7,6 +7,9 @@
 <?php
 
 use App\Components\TravelsTable;
+use App\Repositories\TravelRepository;
+
+var_dump((new TravelRepository)->findAvailableTravels());
 
  if(isset($_SESSION['banner'])): ?>
     <p><?= $_SESSION['banner'] ?></p>
@@ -57,7 +60,7 @@ use App\Components\TravelsTable;
                 <td><?= htmlspecialchars($agency['city']) ?></td>
                 <td>
                     <a href="/agencies/update/<?= $agency['id'] ?>">Update</a>
-                    <a href="#" class="delete_btn">Delete</a>
+                    <a href="#" class="delete_agency_btn">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>    
