@@ -1,6 +1,6 @@
-const deleteBtn = document.querySelectorAll('.delete_btn')
+const deleteAgencyBtn = document.querySelectorAll('.delete_agency_btn')
 
-deleteBtn.forEach((btn) => {
+deleteAgencyBtn.forEach((btn) => {
     btn.addEventListener('click', handleDeleteClick)
 })
 

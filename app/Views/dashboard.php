@@ -1,8 +1,17 @@
-<script src="/assets/javascript/dashboard.js" type="text/javascript" defer></script>
+<head>
+    <script src="/assets/javascript/dashboard.js" type="text/javascript" defer></script>
+</head>
 <nav>
     <a href="/">Page d'accueil</a>
 </nav>
-<?php if(isset($_SESSION['banner'])): ?>
+<?php
+
+use App\Components\TravelsTable;
+use App\Repositories\TravelRepository;
+
+var_dump((new TravelRepository)->findAvailableTravels());
+
+ if(isset($_SESSION['banner'])): ?>
     <p><?= $_SESSION['banner'] ?></p>
 <?php endif; ?>
 
@@ -51,7 +60,7 @@
                 <td><?= htmlspecialchars($agency['city']) ?></td>
                 <td>
                     <a href="/agencies/update/<?= $agency['id'] ?>">Update</a>
-                    <a href="#" class="delete_btn">Delete</a>
+                    <a href="#" class="delete_agency_btn">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>    
@@ -60,28 +69,5 @@
 </section>
 <section id="travels">
     <h3>Trajets</h3>
-    <table border=1>
-        <caption>Liste des trajets</caption>
-        <tr>
-            <th>ID</th>
-            <th>Départ</th>
-            <th>Date & heure</th>
-            <th>Arrivée</th>
-            <th>Date & heure</th>
-            <th>Places</th>
-            <th></th>
-        </tr>
-        <?php foreach($travels as $travel): ?>
-            <tr>
-                <td><?= $travel->getId() ?></td>
-                <td><?= $travel->getDepartureAgency() ?></td>
-                <td><?= $travel->getDeparturelAt() ?></td>
-                <td><?= $travel->getArrivalAgency() ?></td>
-                <td><?= $travel->getArrivalAt() ?></td>
-                <td><?= $travel->getAvaivableSeats() ?></td>
-                <td>
-                    <a href="">Delete</a>
-                </td>
-            </tr>
-        <?php endforeach; ?>      </table>
+    <?php TravelsTable::renderAllTravels('dashboard'); ?>        
 </section>

@@ -39,4 +39,4 @@ INSERT INTO employees (lastname, firstname, phone, email, passeword) VALUES
 INSERT INTO travels (departure_agency_id, arrival_agency_id, departure_at, arrival_at, seats_total, seats_available, employee_id) VALUES
 (10, 2, '2026-06-01 18:53:24.00', '2026-06-01 18:58:24.00', 4, 4, 1),
 (10, 2, '2026-06-05 07:20:00.00', '2026-06-05 12:30:00.00', 4, 0, 2),
-(10, 2, '2026-06-05 07:20:00.00', '2026-06-05 12:30:00.00', 4, 3, 5);
+(10, 2, '2026-06-12 07:20:00.00', '2026-06-13 12:30:00.00', 4, 3, 20);

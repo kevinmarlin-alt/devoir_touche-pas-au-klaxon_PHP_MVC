@@ -14,7 +14,7 @@ class AgencyRepository {
 
     public function findAll(): array {
         $query = $this->pdo->prepare(
-            "SELECT * FROM agencies"
+            "SELECT * FROM agencies ORDER BY city ASC"
         );
 
         $query->execute();
